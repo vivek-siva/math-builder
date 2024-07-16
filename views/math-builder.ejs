@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 0;
+        }
+        .questions {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 20px;
+        }
+        .question {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .question label {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .question .emojis {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .question input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .question.correct::after {
+            content: '✔️';
+            font-size: 24px;
+            color: green;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .submit-button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-image: linear-gradient(45deg, #ff6b6b, #fbc531, #6a89cc, #4cd137, #f368e0);
+            background-size: 300% 300%;
+            animation: rainbow 5s ease infinite;
+            color: #fff;
+            cursor: pointer;
+        }
+        @keyframes rainbow {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Math Builder</h1>
+    <div class="questions" id="questions"></div>
+    <button class="submit-button" id="submit-button">Submit</button>
+
+    <script>
+        const animals = ['🐶', '🐱'];
+        const questionsContainer = document.getElementById('questions');
+        const submitButton = document.getElementById('submit-button');
+
+        function generateQuestions() {
+            for (let i = 0; i < 5; i++) {
+                const num1 = Math.floor(Math.random() * 10);
+                const num2 = Math.floor(Math.random() * 10);
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                const label = document.createElement('label');
+                label.innerHTML = `What is ${num1} + ${num2}?`;
+                questionDiv.appendChild(label);
+
+                const emojis = document.createElement('div');
+                emojis.className = 'emojis';
+                emojis.innerHTML = `${animals[0].repeat(num1)} ${animals[1].repeat(num2)}`;
+                questionDiv.appendChild(emojis);
+
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.dataset.answer = num1 + num2;
+                questionDiv.appendChild(input);
+
+                questionsContainer.appendChild(questionDiv);
+            }
+        }
+
+        function validateAnswers() {
+            const inputs = document.querySelectorAll('.question input');
+            inputs.forEach(input => {
+                if (parseInt(input.value) === parseInt(input.dataset.answer)) {
+                    input.parentElement.classList.add('correct');
+                }
+            });
+        }
+
+        submitButton.addEventListener('click', () => {
+            validateAnswers();
+        });
+
+        generateQuestions();
+    </script>
+</body>
+</html>
