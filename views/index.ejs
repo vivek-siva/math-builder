@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Inspired Feed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .feed {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 10px;
+            max-width: 1000px;
+            margin: 20px;
+        }
+        .feed img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Instagram Inspired Feed</h1>
+    <div class="feed">
+        <% photos.forEach(photo => { %>
+            <div>
+                <img src="<%= photo %>" alt="Random Photo">
+            </div>
+        <% }) %>
+    </div>
+</body>
+</html>
